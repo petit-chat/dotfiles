@@ -1,0 +1,10 @@
+#!/bin/bash
+
+{{ if .personal -}}
+mkdir -p ~/Personal
+git init ~/Personal
+{{ end -}}
+{{ if or .c4 .sg -}}
+mkdir -p ~/Work
+git init ~/Work
+{{ end -}}

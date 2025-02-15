@@ -1,12 +1,21 @@
-[user]
-	name = {{ .name | quote }}
-	email = {{ .email | quote }}
+{{ if .personal -}}
+[includeIf "gitdir:~/Personal/"]
+    path = .gitconfig-personal
+{{ end -}}
+{{ if .c4 -}}
+[includeIf "gitdir:~/Work/"]
+    path = .gitconfig-c4
+{{ end -}}
+{{ if .sg -}}
+[includeIf "gitdir:~/Work/"]
+    path = .gitconfig-sg
+{{ end -}}
 [alias]
-	co = checkout
-	br = branch
-	ci = commit
-	st = status
-[commit]
-	gpgsign = false
+    co = checkout
+    br = branch
+    ci = commit -s
+    st = status
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
+[init]
+    defaultBranch = main

@@ -1,0 +1,10 @@
+[user]
+    email = {{ keyring "c4" "email" }}
+    name = {{ keyring "c4" "name" }}
+[core]
+    autocrlf = input
+[credential {{ keyring "sg" "github" }}]
+    provider = github
+[http {{ keyring "sg" "github" }}]
+    sslcainfo = {{ keyring "sg" "capath" }}
+    proxy =

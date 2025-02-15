@@ -1,6 +1,4 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $name := promptStringOnce . "name" "Git name" -}}
-
 [data]
-  email = {{ $email | quote }}
-  name = {{ $name | quote }}
+  personal = {{ eq .chezmoi.hostname "macbook" }}
+  c4 = {{ eq .chezmoi.hostname "macbook" }}
+  sg = {{ eq .chezmoi.hostname "ip-192-167-91-66" "FR07226059L" }}

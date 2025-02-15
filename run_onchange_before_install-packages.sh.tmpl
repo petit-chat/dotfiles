@@ -1,0 +1,59 @@
+#!/bin/bash
+
+{{ if .personal -}}
+{{ $brews := list
+    "fd"
+    "git"
+    "opentofu"
+    "ripgrep"
+    "rustup"
+    "starship" -}}
+
+{{ $casks := list
+    "cyberduck"
+    "firefox"
+    "google-chrome"
+    "postman"
+    "visual-studio-code"
+    "vlc" -}}
+
+{{ $extensions := list
+    "github.codespaces"
+    "github.copilot"
+    "github.copilot-chat"
+    "github.copilot-workspace"
+    "hashicorp.terraform"
+    "rust-lang.rust-analyzer"
+    "svelte.svelte-vscode"
+    "tamasfe.even-better-toml" -}}
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+
+{{ range ($extensions | sortAlpha | uniq) -}}
+vscode "{{ . }}"
+{{ end -}}
+EOF
+{{ end -}}
+
+{{ if .sg -}}
+{{ $apps := list
+     "keepass"
+     "kubectl"
+     "grcode"
+     "putty-cac"
+     "px"
+     "ripgrep"
+     "superputty"
+     "vsc" -}}
+
+{{ range ($apps | sortAlpha | uniq) -}}
+envinstall "{{ . }}"
+{{ end -}}
+{{ end -}}
