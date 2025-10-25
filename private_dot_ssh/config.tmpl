@@ -1,0 +1,15 @@
+{{- if eq .chezmoi.os "darwin" }}
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+{{- end }}
+
+Host *.carrefour.com
+  User {{ .email | splitList "@" | first }}
+  IdentityFile ~/.ssh/id_opstr
+
+Host *-blue-* *-green-* *-prod-*.pf.xpod.carrefour.com
+  ProxyCommand ssh -W %h:%p bounce.vpoda3p.carrefour.com
+
+Host *.pf.xpod.carrefour.com
+  ProxyCommand ssh -W %h:%p bounce.vpoda3np.carrefour.com

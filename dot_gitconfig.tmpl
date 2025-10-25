@@ -1,0 +1,12 @@
+[user]
+    email = {{ .email | quote }}
+    name = {{ .name | quote }}
+[alias]
+    co = checkout
+    br = branch
+    ci = commit -s
+    st = status
+[init]
+    defaultBranch = main
+[push]
+    autoSetupRemote = true

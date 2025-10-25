@@ -1,0 +1,57 @@
+#!/bin/bash
+
+brew tap azure/kubelogin
+brew tap hashicorp/tap
+brew tap vmware-tanzu/pinniped
+
+{{- $brews := list
+    "azure-cli"
+    "azure/kubelogin/kubelogin"
+    "chezmoi"
+    "fd"
+    "git"
+    "helm"
+    "kubectl"
+    "ripgrep"
+    "rustup"
+    "starship"
+    "terraform"
+    "hashicorp/tap/vault"
+    "vmware-tanzu/pinniped/pinniped-cli" }}
+
+{{- $casks := list
+    "firefox"
+    "google-chrome"
+    "netnewswire"
+    "spotify"
+    "visual-studio-code"
+    "whatsapp" }}
+
+{{- $extensions := list
+    "github.codespaces"
+    "github.copilot"
+    "github.copilot-chat"
+    "github.copilot-workspace"
+    "hashicorp.terraform"
+    "redhat.ansible"
+    "rust-lang.rust-analyzer"
+    "svelte.svelte-vscode"
+    "tamasfe.even-better-toml" }}
+
+echo "Installing packages via Homebrew..."
+
+/opt/homebrew/bin/brew bundle --file=/dev/stdin <<EOF
+{{- range ($brews | sortAlpha | uniq) }}
+brew "{{ . }}"
+{{- end }}
+
+{{- range ($casks | sortAlpha | uniq) }}
+cask "{{ . }}"
+{{- end }}
+
+{{- range ($extensions | sortAlpha | uniq) }}
+vscode "{{ . }}"
+{{- end }}
+EOF
+
+echo "Package installation completed"

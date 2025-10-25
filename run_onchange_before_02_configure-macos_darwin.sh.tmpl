@@ -1,0 +1,46 @@
+#!/bin/bash
+
+echo "Configuring macOS system preferences..."
+
+echo "Configuring Dock..."
+defaults write com.apple.dock autohide -int 1
+defaults write com.apple.dock largesize -int 128
+defaults write com.apple.dock magnification -int 1
+defaults write com.apple.dock orientation -string left
+defaults write com.apple.dock mru-spaces -int 0
+defaults write com.apple.dock tilesize -int 54
+defaults write com.apple.dock show-recents -int 0
+defaults write com.apple.dock launchanim -int 0
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.4
+
+echo "Configuring global preferences..."
+defaults write "Apple Global Domain" com.apple.trackpad.scaling -float 1.5
+defaults write "Apple Global Domain" AppleIconAppearanceTheme -string ClearAutomatic
+defaults write "Apple Global Domain" InitialKeyRepeat -int 15
+defaults write "Apple Global Domain" KeyRepeat -int 2
+defaults write "Apple Global Domain" NSAutomaticCapitalizationEnabled -int 0
+defaults write "Apple Global Domain" NSAutomaticDashSubstitutionEnabled -int 0
+defaults write "Apple Global Domain" NSAutomaticInlinePredictionEnabled -int 0
+defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -int 0
+defaults write "Apple Global Domain" NSAutomaticQuoteSubstitutionEnabled -int 0
+defaults write "Apple Global Domain" NSAutomaticSpellingCorrectionEnabled -int 0
+defaults write "Apple Global Domain" WebAutomaticSpellingCorrectionEnabled -int 0
+
+echo "Configuring Control Center..."
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC UserSwitcher" -int 1
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC com.apple.menuextra.vpn" -int 1
+
+echo "Configuring input settings..."
+defaults write com.apple.HIToolbox AppleFnUsageType -int 0
+defaults write com.apple.TextInputMenuAgent "NSStatusItem VisibleCC Item-0" -int 0
+
+echo "Restarting affected services..."
+killall Dock
+killall SystemUIServer
+killall Finder
+killall ControlCenter
+killall TextInputMenuAgent
+killall cfprefsd
+
+echo "macOS configuration completed"

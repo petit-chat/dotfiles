@@ -1,0 +1,39 @@
+alias l="ls"
+alias ll="ls -al"
+alias k="kubectl"
+alias kctx="kubectl config get-contexts"
+alias kctxu="kubectl config use-context"
+alias kns="kubectl config set-context --current --namespace"
+
+export no_proxy=localhost,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+export NO_PROXY=localhost,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+
+togpx () {
+    if [ -z $http_proxy ]; then
+        export http_proxy="http://{{ .email | splitList "@" | first }}:$1@10.176.205.3:8090"
+        export https_proxy=$http_proxy
+        export all_proxy=$http_proxy
+        export HTTP_PROXY=$http_proxy
+        export HTTPS_PROXY=$http_proxy
+        export ALL_PROXY=$http_proxy
+        git config --global https.proxy $http_proxy
+        git config --global http.proxy $http_proxy
+        echo "PROXY -> ON"
+    else
+        unset HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy
+        git config --global --unset https.proxy
+        git config --global --unset http.proxy
+        echo "PROXY -> OFF"
+    fi
+}
+
+vauth () {
+    export VAULT_TOKEN=$(curl -X POST -H "Content-Type: application/json" -d "{ \"password\": \"$1\" }"  "https://vault.agilefabric.fr.carrefour.com/v1/auth/ldap/login/{{ .email | splitList "@" | first }}" --silent | jq -r ".auth.client_token")
+    echo "VAULT -> OK"
+}
+
+gov () {
+  git add .
+  git commit --amend --no-edit
+  git push -f
+}

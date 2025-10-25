@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Install Homebrew if not present
+if ! command -v brew &> /dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    echo "Homebrew already installed"
+fi
+
+echo "Creating work directory..."
+mkdir -p ~/Work
+
+echo "System setup completed"
